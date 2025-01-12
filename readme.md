@@ -20,3 +20,4 @@
     - exponential backoff
 
 ### Policy 1 - Retry Immediately 5x
+![image](https://github.com/user-attachments/assets/7f54978b-6fc5-4dfb-b6e7-04b2998b5e19)
