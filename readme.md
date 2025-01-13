@@ -21,3 +21,8 @@
 
 ### Policy 1 - Retry Immediately 5x
 ![image](https://github.com/user-attachments/assets/7f54978b-6fc5-4dfb-b6e7-04b2998b5e19)
+
+### Policy 2 - Retry 5x and Wait 3s
+![image](https://github.com/user-attachments/assets/a301c965-05c0-417f-8b51-c37d85201021)
+
+
