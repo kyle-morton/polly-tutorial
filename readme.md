@@ -25,4 +25,9 @@
 ### Policy 2 - Retry 5x and Wait 3s
 ![image](https://github.com/user-attachments/assets/a301c965-05c0-417f-8b51-c37d85201021)
 
+### Retry 3 - Retry 5x w/ Exp Backoff
+![image](https://github.com/user-attachments/assets/0d9a5bd7-04e1-4b1e-8032-36403e23d1fc)
+
+
+
 
