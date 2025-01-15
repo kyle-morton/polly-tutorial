@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RequestService.Policies;
 
 namespace RequestService.Controllers;
 
@@ -12,11 +13,11 @@ namespace RequestService.Controllers;
 [ApiController]
 public class RequestController : ControllerBase
 {
-    private readonly ILogger<RequestController> _logger;
+    private ClientPolicy _clientPolicy;
 
-    public RequestController(ILogger<RequestController> logger)
+    public RequestController(ClientPolicy clientPolicy)
     {
-        _logger = logger;
+        _clientPolicy = clientPolicy;
     }
 
     // GET api/request
@@ -24,7 +25,13 @@ public class RequestController : ControllerBase
     public async Task<ActionResult> MakeRequest()
     {
         var client = new HttpClient();
-        var response = await client.GetAsync("https://localhost:7286/api/response/25");
+
+        //var response = await client.GetAsync("https://localhost:7286/api/response/25");
+
+        // wrap our request in our client policy to retry
+        var response = await _clientPolicy.ImmediateHttpRetry.ExecuteAsync(
+            () => client.GetAsync("https://localhost:7286/api/response/25")
+        );
 
         if (response.IsSuccessStatusCode)
         {
