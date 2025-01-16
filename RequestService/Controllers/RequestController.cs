@@ -29,7 +29,7 @@ public class RequestController : ControllerBase
         //var response = await client.GetAsync("https://localhost:7286/api/response/25");
 
         // wrap our request in our client policy to retry
-        var response = await _clientPolicy.ImmediateHttpRetry.ExecuteAsync(
+        var response = await _clientPolicy.LinearHttpRetry.ExecuteAsync(
             () => client.GetAsync("https://localhost:7286/api/response/25")
         );
 
