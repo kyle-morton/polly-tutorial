@@ -13,23 +13,25 @@ namespace RequestService.Controllers;
 [ApiController]
 public class RequestController : ControllerBase
 {
-    private ClientPolicy _clientPolicy;
+    private readonly IHttpClientFactory _clientFactory;
 
-    public RequestController(ClientPolicy clientPolicy)
+    public RequestController(ClientPolicy clientPolicy, IHttpClientFactory clientFactory)
     {
-        _clientPolicy = clientPolicy;
+        _clientFactory = clientFactory;
     }
 
     // GET api/request
     [HttpGet]
     public async Task<ActionResult> MakeRequest()
     {
-        var client = new HttpClient();
+        var client = _clientFactory.CreateClient("ImmediateRetryClient");
+
+        var response = await client.GetAsync("https://localhost:7286/api/response/25");
 
         // wrap our request in our client policy to retry
-        var response = await _clientPolicy.ExponentialHttpRetry.ExecuteAsync(
-            () => client.GetAsync("https://localhost:7286/api/response/25")
-        );
+        // var response = await _clientPolicy.ExponentialHttpRetry.ExecuteAsync(
+        //     () => client.GetAsync("https://localhost:7286/api/response/25")
+        // );
 
         if (response.IsSuccessStatusCode)
         {
